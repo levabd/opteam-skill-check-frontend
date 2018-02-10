@@ -1,0 +1,63 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+            <i class="fa fa-"> </i>
+            <h1>Opteam test</h1>
+            <form  [formGroup]="loginForm" (ngSubmit)="onRegister()">
+                <div class="alert-list" *ngIf="formErrors.length">
+                    <div class="alert alert-warning" *ngFor="let error of formErrors">
+                        {{ error[0] }}
+                    </div>
+                </div>
+
+                <div class="form-content">
+                    <div class="form-group">
+                        <input type="text"
+                               formControlName="email"
+                               [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                               class="form-control input-underline input-lg"
+                               id="email"
+                               placeholder="Email">
+
+                        <div *ngIf="email.errors && email.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="email.hasError('pattern')" class="invalid-feedback">
+                            Email does not match pattern: domain@mail.com
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="password"
+                               formControlName="password"
+                               [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                               class="form-control input-underline input-lg"
+                               id="_password"
+                               placeholder="Password"
+                               autocomplete="off">
+                        <div *ngIf="password.invalid && password.errors && password.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="password.invalid && password.errors && password.errors.minlength" class="invalid-feedback">
+                            You must enter min 6 symbols
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-start">
+                    <a class="btn rounded-btn" (click)="onLogin()"> Log in </a>&nbsp;
+                    <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
+                </div>
+
+                <div class="d-flex justify-content-start m-3 text-uppercase" *ngIf="facebookAvailable || linkedInAvailable">
+                        or
+                </div>
+
+                <div class="d-flex justify-content-start" *ngIf="facebookAvailable || linkedInAvailable">
+                    <a class="btn rounded-btn fb" (click)="onSocial('facebook')">Login with Facebook <i class="fa fa-facebook-square"></i></a>&nbsp;
+                    <a class="btn rounded-btn li" (click)="onSocial('linkedin')">Login with Linkedin <i class="fa fa-linkedin-square"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

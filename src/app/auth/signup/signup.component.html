@@ -1,0 +1,124 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <img class="user-avatar" src="assets/images/logo.png" width="150px"/>
+                    <h1 class="text-center">Registration</h1>
+                </div>
+            </div>
+
+
+            <form role="form"
+                  [formGroup]="registerForm"
+                  (ngSubmit)="onRegister()"
+                  class="form-signin"
+                  novalidate>
+
+                <div class="form-content">
+
+
+                    <div class="alert-list" *ngIf="dataInvalid">
+                        <div class="alert alert-danger" *ngFor="let error of formErrors">
+                            {{ error[0] }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text"
+                               formControlName="name"
+                               class="form-control input-underline input-lg"
+                               [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
+                               id="first-name"
+                               placeholder="Name"
+                               required>
+                        <div *ngIf="name.errors && name.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="name.errors && name.errors.maxlength" class="invalid-feedback">
+                            You must enter maximum 250 symbols
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"
+                               formControlName="surname"
+                               class="form-control input-underline input-lg"
+                               [class.is-invalid]="surname.invalid && (surname.dirty || surname.touched)"
+                               id="surname"
+                               placeholder="Surname">
+                        <div *ngIf="surname.errors && surname.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="surname.errors && surname.hasError('maxlength')" class="invalid-feedback">
+                            You must enter maximum 250 symbols
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text"
+                               formControlName="email"
+                               [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                               class="form-control input-underline input-lg"
+                               id="email"
+                               placeholder="Email">
+
+                        <div *ngIf="email.errors && email.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="email.hasError('pattern')" class="invalid-feedback">
+                            Email does not match pattern: domain@mail.com
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="password"
+                               formControlName="password"
+                               [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                               class="form-control input-underline input-lg"
+                               id="_password"
+                               placeholder="Password"
+                               autocomplete="off">
+                        <div *ngIf="password.invalid && password.errors && password.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="password.invalid && password.errors && password.errors.minlength" class="invalid-feedback">
+                            You must enter min 6 symbols
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password"
+                               formControlName="password_confirmation"
+                               [class.is-invalid]="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched)"
+                               class="form-control input-underline input-lg"
+                               id="password_confirmation"
+                               placeholder="Password confirmation"
+                               autocomplete="off">
+                        <div *ngIf="password_confirmation.invalid && password_confirmation.errors && password_confirmation.errors.required" class="invalid-feedback">
+                            Field is required.
+                        </div>
+                        <div *ngIf="password_confirmation.errors && password_confirmation.errors.minlength" class="invalid-feedback">
+                            You must enter min 6 symbols
+                        </div>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-light" (click)="onRegister(registerForm)"> Register </a>&nbsp;
+                    <a class="btn btn-light" [routerLink]="['/login']"> Log in </a>
+                </div>
+                <div class="d-flex justify-content-start m-3 text-uppercase"
+                     *ngIf="facebookAvailable || linkedInAvailable">
+                    or
+                </div>
+
+                <div class="d-flex justify-content-start" *ngIf="facebookAvailable || linkedInAvailable">
+                    <a class="btn fb" (click)="onSocial('facebook')">
+                        Register with Facebook
+                        <i class="fa fa-facebook-square"></i></a>&nbsp;
+                    <a class="btn li" (click)="onSocial('linkedin')">
+                        Register with Linkedin
+                        <i class="fa fa-linkedin-square"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

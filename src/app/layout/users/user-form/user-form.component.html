@@ -1,0 +1,127 @@
+
+    <app-page-header [heading]="user_id ? 'Update user' : 'Create user' | translate" [icon]="'fa-users'"></app-page-header>
+    <div class="row">
+    <div class="col-lg-6 col-12">
+        <form [formGroup]="userForm"
+              (ngSubmit)="onSave()"
+              class="form-signin"
+              novalidate>
+            <div class="div" *ngIf="!canDisplayForm"><small>Wait for data</small></div>
+            <div class="form-content" *ngIf="canDisplayForm">
+
+                <div class="alert-list" *ngIf="formErrors.length">
+                    <div class="alert alert-warning" *ngFor="let error of formErrors">
+                        {{ error[0] }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div *ngIf="updating">
+                        <input type="hidden"  formControlName="id">
+                    </div>
+                    <input type="text"
+                           formControlName="name"
+                           class="form-control input-underline input-lg"
+                           [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
+                           id="first-name"
+                           placeholder="{{'Name'| translate}}"
+                           required>
+                    <div *ngIf="name.errors?.required" class="invalid-feedback">
+                        Field is required.
+                    </div>
+                    <div *ngIf="name.errors?.maxlength" class="invalid-feedback">
+                        You must enter maximum 250 symbols
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text"
+                           formControlName="surname"
+                           class="form-control input-underline input-lg"
+                           [class.is-invalid]="surname.invalid && (surname.dirty || surname.touched)"
+                           id="surname"
+                           placeholder="{{'Surname'| translate}}">
+                    <div *ngIf="surname.errors?.required" class="invalid-feedback">
+                        Field is required.
+                    </div>
+                    <div *ngIf="surname.errors?.maxlength" class="invalid-feedback">
+                        You must enter maximum 250 symbols
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text"
+                           formControlName="email"
+                           [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                           class="form-control input-underline input-lg"
+                           id="email"
+                           placeholder="{{'Email'| translate}}">
+
+                    <div *ngIf="email.errors?.required" class="invalid-feedback">
+                        Field is required.
+                    </div>
+                    <div *ngIf="email.errors?.email" class="invalid-feedback">
+                        Email does not match pattern: domain@mail.com
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="password"
+                           formControlName="password"
+                           [class.is-invalid]="password.invalid && (password.dirty || password.touched)"
+                           class="form-control input-underline input-lg"
+                           id="_password"
+                           placeholder="{{'Password'| translate}}"
+                           autocomplete="off">
+                    <div *ngIf="password.errors?.required"
+                         class="invalid-feedback">
+                        Field is required.
+                    </div>
+                    <div *ngIf="password.errors?.minlength"
+                         class="invalid-feedback">
+                        You must enter min 6 symbols
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="!updating">
+                    <input type="password"
+                           formControlName="password_confirmation"
+                           [class.is-invalid]="password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched)"
+                           class="form-control input-underline input-lg"
+                           id="_password_confirmation"
+                           placeholder="{{'Repeat password'| translate}}"
+                           autocomplete="off">
+                    <div *ngIf="password_confirmation.errors?.required"
+                         class="invalid-feedback">
+                        Field is required.
+                    </div>
+                    <div *ngIf="password_confirmation.errors?.minlength"
+                         class="invalid-feedback">
+                        You must enter min 6 symbols
+                    </div>
+                    <div *ngIf="password_confirmation.errors?.matchOther"
+                         class="invalid-feedback">
+                        Password confirmation does not match
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <select formControlName="role_id"
+                            [class.is-invalid]="role_id.invalid && (role_id.dirty || role_id.touched)"
+                            class="form-control">
+                        <option *ngFor="let role of roles | async"
+                                [value]="role.id"
+                                [selected]="!updating && role.id===0"
+                        >{{ role!.name | translate}}
+                        </option>
+                    </select>
+                    <div *ngIf="role_id.invalid && role_id.errors?.required"
+                         class="invalid-feedback">
+                        Field is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start" *ngIf="canDisplayForm">
+                <a *ngIf="updating" class="btn btn-light" (click)="onUpdate(userForm)"> {{ 'Update' | translate}} </a>&nbsp;
+                <a *ngIf="!updating" class="btn btn-light" (click)="onCreate(userForm)"> {{ 'Create' | translate}} </a>&nbsp;
+                <a class="btn btn-light" (click)="location.back()">{{ 'To list' | translate}} </a>
+            </div>
+        </form>
+    </div>
+</div>

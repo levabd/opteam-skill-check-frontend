@@ -1,0 +1,32 @@
+// shared css for the login and signup page
+
+@import "../../app.component";
+
+.ng-invalid.ng-untouched:not(form){
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.ng-invalid.ng-untouched +.invalid-feedback{
+  display: none;
+}
+
+.ng-invalid.ng-touched +.invalid-feedback{
+  display: block;
+}
+
+.invalid-feedback, .backend-errors{
+  text-align: left;
+}
+
+.fb{
+  color: white!important;
+
+  background-color: $facebookColor;
+}
+.li{
+  color: white!important;
+  background-color: $linkedinColor;
+}

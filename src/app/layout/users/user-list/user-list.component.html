@@ -1,0 +1,115 @@
+
+    <app-page-header [heading]="'Users'| translate" [icon]="'fa-users'"></app-page-header>
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light p-2">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <a [routerLink]="['/users/create']" [routerLinkActive]="['router-link-active']"
+                       class="list-group-item">
+                        <i class="fa fa-plus"></i>&nbsp;{{ 'Create user' | translate }}
+                    </a>
+                    <form [formGroup]="filterForm" (ngSubmit)="getUsers" class="form-inline ml-auto">
+                        <div class="btn-group btn-group-toggle mr-sm-2" ngbRadioGroup name="radioBasic"
+                             formControlName="role">
+                            <label ngbButtonLabel class="btn-primary">
+                                <input ngbButton
+                                       (change)="getUsers($event)"
+                                       class="form-check-input"
+                                       type="radio"
+                                       id="inlineRadio1"
+                                       value="trainee">
+                                {{ 'Trainee'| translate }}
+                            </label>
+                            <label ngbButtonLabel class="btn-primary">
+                                <input ngbButton
+                                       (change)="getUsers($event)"
+                                       class="form-check-input"
+                                       id="inlineRadio2"
+                                       type="radio"
+                                       value="trainer">
+                                {{ 'Trainer'| translate }}
+                            </label>
+                            <label ngbButtonLabel class="btn-primary">
+                                <input ngbButton
+                                       (change)="getUsers($event)"
+                                       class="form-check-input"
+                                       type="radio"
+                                       id="inlineRadio3"
+                                       value="admin">
+                                {{ 'Admin'| translate }}
+                            </label>
+                            <label ngbButtonLabel class="btn-primary">
+                                <input ngbButton
+                                       (change)="getUsers($event)"
+                                       class="form-check-input"
+                                       type="radio"
+                                       id="inlineRadio4"
+                                       value="all">
+                                {{ 'All'| translate }}
+                            </label>
+                        </div>
+                        <input (change)="getUsers($event)"
+                               formControlName="search"
+                               class="form-control "
+                               type="search"
+                               placeholder="Search"
+                               aria-label="Search">
+                        <div class="input-group-append mr-sm-2" *ngIf="search.value!==''"
+                             (click)="search.setValue('');getUsers(1);">
+                            <span class="input-group-text"><i class="fa fa-recycle"></i></span>
+                        </div>
+
+                        <button (click)="getUsers($event)" class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            {{ 'Search'| translate }}
+                        </button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row" *ngIf="pagination.data && pagination.data.length">
+        <div class="col-12">
+            <div class="p-2 table-responsive">
+                <table class="table table-hovered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'Name' | translate }}</th>
+                        <th>{{ 'Email' | translate }}</th>
+                        <th>{{ 'Role' | translate }}</th>
+                        <th class="text-center">{{ 'Actions' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let user of pagination.data">
+                        <td>{{user.name + ' ' + user.surname}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.role.name}}</td>
+                        <td class="d-flex justify-content-center">
+                            <a routerLink="/users/{{user.id}}/edit"
+                               class="btn btn-primary btn-sm">
+                                <i class="fa fa-pencil"></i> {{ 'Edit' | translate }}
+                            </a>
+
+                            <button [swal]="{title: 'Are you sure?'| translate, showCancelButton: true}"
+                                    (confirm)="deleteUser(user.id)"
+                                    (cancel)="handleRefusalToSetEmail($event)"
+                                    class="btn btn-warning btn-sm ml-1">
+                                <i class="fa fa-trash"></i> {{ 'Remove' | translate }}
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ngb-pagination
+                    class="d-flex justify-content-end"
+                    [collectionSize]="pagination.total"
+                    [page]="page.value || 1"
+                    [maxSize]="5"
+                    [rotate]="true"
+                    [boundaryLinks]="true"
+                    (pageChange)="getUsers($event)"
+            ></ngb-pagination>
+        </div>
+    </div>
