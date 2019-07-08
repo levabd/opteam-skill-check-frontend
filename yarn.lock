@@ -1470,7 +1470,7 @@ deep-equal@^1.0.1:
   resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
 
 deep-extend@^0.5.1:
-  version "0.4.2"
+  version "0.5.1"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.5.1.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
 
 default-require-extensions@^1.0.0:
@@ -3423,9 +3423,9 @@ media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
 
-mem@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
+mem@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/mem/-/mem-4.0.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
   dependencies:
     mimic-fn "^1.0.0"
 
@@ -3893,7 +3893,7 @@ os-locale@^2.0.0:
   dependencies:
     execa "^0.7.0"
     lcid "^1.0.0"
-    mem "^1.1.0"
+    mem "^4.0.0"
 
 os-tmpdir@^1.0.0, os-tmpdir@~1.0.1, os-tmpdir@~1.0.2:
   version "1.0.2"
